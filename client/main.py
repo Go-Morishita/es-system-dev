@@ -23,10 +23,13 @@ def main():
             # Output format
             <es_answers>
             <name>（氏名）</name>
-            <question1>（設問①の内容）</question1>
-            <answer1>（設問①の回答）</answer1>
-            <question2>（設問②の内容）</question2>
-            <answer2>（設問②の回答）</answer2>
+            <question_answers>
+                <item>
+                    <question>（設問の内容）</question>
+                    <answer>（設問の回答）</answer>
+                </item>
+                ...
+            </question_answers>
             </es_answers>
             """,
         "user_input":
@@ -34,6 +37,8 @@ def main():
             企業名：日立製作所
             設問①：日立製作所を志望する理由は何ですか？
             設問②：学生の時に特に力を入れたことは何ですか？
+            設問③：あなたの強みは何ですか？
+            設問④：あなたの弱みは何ですか？
             氏名：森下 剛
             大学・学部・学科：青山学院大学・理工学部・情報テクノロジー学科
             GPA：3.6
@@ -60,6 +65,9 @@ def main():
 
     # Windows / macOS / Linux 共通で開けるように
     webbrowser.open(f"file://{os.path.abspath(output_path)}")
+
+    print("取得したJSON:")
+    print(config)
 
 
 if __name__ == "__main__":

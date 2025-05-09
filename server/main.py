@@ -5,7 +5,7 @@ import xml.etree.ElementTree as ET
 import os
 
 from create_pdf import create_pdf
-from models import GPTRequest, CONFIG_JSON
+from models import GPTRequest, CONFIG_JSON, QA
 
 load_dotenv()
 
@@ -23,7 +23,7 @@ async def get_json_endpoint(req: GPTRequest):
                 {"role": "system", "content": req.instruction},
                 {"role": "user", "content": req.user_input}
             ],
-            max_tokens=1000
+            max_tokens=5000
         )
 
         raw_text = response.choices[0].message.content
@@ -31,10 +31,13 @@ async def get_json_endpoint(req: GPTRequest):
 
         result_json = CONFIG_JSON(
             name=root.find("name").text.strip(),
-            question1=root.find("question1").text.strip(),
-            answer1=root.find("answer1").text.strip(),
-            question2=root.find("question2").text.strip(),
-            answer2=root.find("answer2").text.strip()
+            question_answers=[
+                QA(
+                    question=item.find("question").text.strip(),
+                    answer=item.find("answer").text.strip()
+                )
+                for item in root.findall("question_answers/item")
+            ]
         )
 
         return result_json.model_dump()

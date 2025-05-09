@@ -87,8 +87,11 @@ def create_pdf(config: CONFIG_JSON):
             c.drawString(margin_x, y, line)
             y -= line_height
 
-    write_section(config.question1, config.answer1)
-    write_section(config.question2, config.answer2)
+    for i, qa in enumerate(config.question_answers):
+        if i == 0:
+            write_section(qa.question, qa.answer, insert_top_margin=False)
+        else:
+            write_section(qa.question, qa.answer)
 
     c.save()
 

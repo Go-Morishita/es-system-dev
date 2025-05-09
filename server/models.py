@@ -1,12 +1,15 @@
 from pydantic import BaseModel
+from typing import List
+
+
+class QA(BaseModel):
+    question: str
+    answer: str
 
 
 class CONFIG_JSON(BaseModel):
     name: str
-    question1: str
-    answer1: str
-    question2: str
-    answer2: str
+    question_answers: List[QA]
 
 
 class GPTRequest(BaseModel):
